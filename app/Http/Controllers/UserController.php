@@ -35,7 +35,8 @@ class UserController extends Controller
             'role' => $request->role,
         ]);
 
-        return redirect()->route('users.index')->with('success', 'Thêm user thành công');
+        return redirect()->route('users.index')
+            ->with('success', 'Thêm user thành công');
     }
 
     public function edit(User $user)
@@ -57,12 +58,20 @@ class UserController extends Controller
             'role' => $request->role,
         ]);
 
-        return redirect()->route('users.index')->with('success', 'Cập nhật thành công');
+        return redirect()->route('users.index')
+            ->with('success', 'Cập nhật thành công');
     }
 
     public function destroy(User $user)
     {
+        if ($user->id == auth()->id()) {
+            return redirect()->route('users.index')
+                ->with('error', 'Bạn không thể xoá tài khoản này');
+        }
+
         $user->delete();
-        return redirect()->route('users.index')->with('success', 'Xóa thành công');
+
+        return redirect()->route('users.index')
+            ->with('success', 'Xoá user thành công');
     }
 }
