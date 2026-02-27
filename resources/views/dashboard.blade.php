@@ -2,11 +2,9 @@
 
 @section('content')
 
-<div class="card shadow">
-    <div class="card-body">
-        <h3>🎉 Đăng nhập thành công</h3>
-        <p>Chào mừng bạn đến hệ thống quản lý bán hàng.</p>
-    </div>
+<div class="dashboard-box">
+    <h2>🎉 Đăng nhập thành công</h2>
+    <p>Chào mừng bạn đến hệ thống quản lý bán hàng.</p>
 </div>
 
 @endsection

@@ -2,40 +2,36 @@
 
 @section('content')
 
-<h3>Thêm User</h3>
+<h2>Thêm User</h2>
 
-<div class="card shadow">
-    <div class="card-body">
-        <form method="POST" action="{{ route('users.store') }}">
-            @csrf
+<div class="form-container">
+    <form method="POST" action="{{ route('users.store') }}">
+        @csrf
 
-            <div class="mb-3">
-                <label>Tên</label>
-                <input type="text" name="name" class="form-control">
-            </div>
+        <div class="form-group">
+            <input type="text" name="name" placeholder="Tên">
+        </div>
 
-            <div class="mb-3">
-                <label>Email</label>
-                <input type="email" name="email" class="form-control">
-            </div>
+        <div class="form-group">
+            <input type="email" name="email" placeholder="Email">
+        </div>
 
-            <div class="mb-3">
-                <label>Mật khẩu</label>
-                <input type="password" name="password" class="form-control">
-            </div>
+        <div class="form-group">
+            <input type="password" name="password" placeholder="Mật khẩu">
+        </div>
 
-            <div class="mb-3">
-                <label>Role</label>
-                <select name="role" class="form-control">
-                    <option value="admin">Admin</option>
-                    <option value="staff">Staff</option>
-                </select>
-            </div>
+        <div class="form-group">
+            <select name="role">
+                <option value="admin">Admin</option>
+                <option value="staff">Staff</option>
+            </select>
+        </div>
 
-            <button class="btn btn-success">Lưu</button>
-            <a href="{{ route('users.index') }}" class="btn btn-secondary">Quay lại</a>
-        </form>
-    </div>
+        <div class="button-group">
+            <button type="submit" class="btn-success">Lưu</button>
+            <a href="{{ route('users.index') }}" class="btn-secondary">Quay lại</a>
+        </div>
+    </form>
 </div>
 
 @endsection
