@@ -1,61 +1,64 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
+
+@section('title','Quản lý User')
+@section('breadcrumb','Quản trị / User')
+@section('page_title','Quản lý User')
 
 @section('content')
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <h3 class="card-title">Danh sách người dùng</h3>
+        <p class="card-sub">Quản lý tài khoản và phân quyền</p>
+      </div>
+      <a href="{{ route('users.create') }}" class="btn btn-primary">+ Thêm User</a>
+    </div>
 
-<div class="page-header">
-    <h2>Quản lý User</h2>
-    <a href="{{ route('users.create') }}" class="btn-primary">+ Thêm User</a>
-</div>
-
-@if(session('success'))
-    <div class="alert-success">{{ session('success') }}</div>
-@endif
-
-@if(session('error'))
-    <div class="alert-danger">{{ session('error') }}</div>
-@endif
-
-<div class="table-container">
-    <table>
-        <thead>
+    <div class="card-body">
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
             <tr>
-                <th>ID</th>
-                <th>Tên</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Hành động</th>
+              <th style="width:90px">ID</th>
+              <th>Tên</th>
+              <th>Email</th>
+              <th style="width:160px">Role</th>
+              <th style="width:220px">Hành động</th>
             </tr>
-        </thead>
-        <tbody>
-            @foreach($users as $user)
-            <tr>
-                <td class="center">{{ $user->id }}</td>
-                <td>{{ $user->name }}</td>
-                <td>{{ $user->email }}</td>
-                <td class="center">
-                    @if($user->role == 'admin')
-                        <span class="badge-danger">Admin</span>
-                    @else
-                        <span class="badge-secondary">Staff</span>
-                    @endif
+          </thead>
+          <tbody>
+            @foreach($users as $u)
+              <tr>
+                <td>{{ $u->id }}</td>
+                <td>{{ $u->name }}</td>
+                <td>{{ $u->email }}</td>
+                <td>
+                  @if($u->role === 'Admin')
+                    <span class="badge badge-admin">Admin</span>
+                  @else
+                    <span class="badge badge-staff">Staff</span>
+                  @endif
                 </td>
-                <td class="center">
-                    <a href="{{ route('users.edit', $user->id) }}" class="btn-warning">Sửa</a>
+                <td>
+                  <div class="t-actions">
+                    <a class="btn btn-warning btn-sm" href="{{ route('users.edit',$u->id) }}">Sửa</a>
 
-                    @if($user->id != auth()->id())
-                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn-danger">Xóa</button>
-                        </form>
+                    @if($u->role === 'Admin')
+                      <button class="btn btn-sm" disabled style="opacity:.55;cursor:not-allowed">Không thể xoá</button>
                     @else
-                        <button class="btn-disabled" disabled>Không thể xoá</button>
+                      <form action="{{ route('users.destroy',$u->id) }}" method="POST" onsubmit="return confirm('Xoá user này?')">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-danger btn-sm" type="submit">Xoá</button>
+                      </form>
                     @endif
+                  </div>
                 </td>
-            </tr>
+              </tr>
             @endforeach
-        </tbody>
-    </table>
-</div>
-
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 @endsection
